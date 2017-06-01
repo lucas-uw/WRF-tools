@@ -4,8 +4,9 @@ $namelist = shift;
 
 if($namelist eq "-h" || $namelist eq "") {
   print "analyze_namelist.pl:  Interprate your WRF namalist.input\n";
-  print "   Developed by Xiaodong Chen at U.Washington  (xiaodc\@uw.edu)\n";
-  print "   Use:  analyze_namelist.pl <path-to-namelist.input>\n";
+  print "Ver:     1.0.0\n";
+  print "Author:  Xiaodong Chen<xiaodc.work\@gmail.com>\n";
+  print "Use:  analyze_namelist.pl <path-to-namelist.input>\n";
   print "   This version works for WRFV3.6.x. Please check with the official user guide and modify the hash within the script for other versions.\n";
   exit;
 }
