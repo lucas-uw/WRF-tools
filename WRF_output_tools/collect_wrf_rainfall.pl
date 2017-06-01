@@ -12,7 +12,7 @@ $outfile = shift;
 if($start_time eq "") {
   print "collect_wrf_rainfall.pl   Collect total precipitation from WRF output\n";
   print "Ver:     1.0.0\n";
-  print "Author:  Xiaodong Chen<xiaodc@uw.edu>\n";
+  print "Author:  Xiaodong Chen<xiaodc.work\@gmail.com>\n";
   print "Use:  collect_rainfall_adv.pl <start_time> <end_time> <wrfoutdir> <wrfoutinterval> <outfile>\n";
   print "              <start_time>      First timestamp in wrfout. e.g.  1970-2-16-0\n";
   print "              <end_time>        Last timestamp in wrfout. e.g.  1970-2-16-0\n";
