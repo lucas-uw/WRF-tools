@@ -1,17 +1,25 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-$namelist = shift;
+use Getopt::Long;
 
-if($namelist eq "-h" || $namelist eq "") {
-  print "analyze_namelist.pl:  Interprate your WRF namalist.input\n";
-  print "Ver:     1.0.0\n";
-  print "Author:  Xiaodong Chen<xiaodc.work\@gmail.com>\n";
-  print "Use:  analyze_namelist.pl <path-to-namelist.input>\n";
-  print "   This version works for WRFV3.6.x. Please check with the official user guide and modify the hash within the script for other versions.\n";
-  exit;
+%options_hash = (
+  h   => \$help,
+  i   => \$namelist,
+  c   => \$coloropt,
+);
+$status = &GetOptions(\%options_hash,"h","i=s","c");
+
+if ($help || !-e $namelist) {
+  &usage();
+  exit(0);
 }
 
-print "Reminder: This script works on WRFV3.6.1 namelist.input. For other versions, please double check the bash within the script before using it.\n";
+if ($coloropt) {
+  use Term::ANSIColor;
+  # Default color scheme is for up to 5 nesting. For more colors, edit the this array
+  @colors = ('blue', 'red', 'green', 'yellow', 'magenta');
+}
+
 
 # Building reference data for WRFV3.6.1
 %param_schemes = (
@@ -130,7 +138,6 @@ foreach(<INFO>) {
 }
 close(INFO);
 
-#open(IN,"grep mp_physics $namelist |") or die "$0: ERROR: cannot open namelist $namelist for reading\n";
 open(IN,$namelist) or die "$0: ERROR: cannot open namelist $namelist for reading\n";
 foreach(<IN>) {
   chomp;
@@ -138,21 +145,22 @@ foreach(<IN>) {
   s/\=//;
   @fields = split/\s+|,/;
   $ncols = @fields;
-#  print "0=|$fields[0]|  1=|$fields[1]|    2=|$fields[2]|    3=|$fields[3]|  4=|$fields[4]|\n";
-#  print "@fields\n";
   if($ncols>1) {
     for($i=0; $i<$nest_layers; $i++) {
       $info{$fields[0]}{$i} = $fields[2*$i+1];
     }
   }
-#  print "$ncols\n";
-#  print "$fields[0]  $fields[1] $fields[2]\n";
 }
 close(IN);
 
 print "\n===========================Time information===========================\n";
 for($nest=0; $nest<$nest_layers; $nest++) {
-  print "Nest $nest:\n";
+  if($coloropt) {
+    print color($colors[$nest]), "Nest $nest:\n";
+  }
+  else {
+    print "Nest $nest:\n";
+  }
   $start_string = sprintf "%d-%02d-%02d  %02d:%02d:%02d UTC",$info{'start_year'}{$nest},$info{'start_month'}{$nest},$info{'start_day'}{$nest},$info{'start_hour'}{$nest},$info{'start_minute'}{$nest},$info{'start_second'}{$nest};
   printf "     start from :  %s\n",$start_string;
   $end_string = sprintf "%d-%02d-%02d  %02d:%02d:%02d UTC",$info{'end_year'}{$nest},$info{'end_month'}{$nest},$info{'end_day'}{$nest},$info{'end_hour'}{$nest},$info{'end_minute'}{$nest},$info{'end_second'}{$nest};
@@ -162,7 +170,8 @@ for($nest=0; $nest<$nest_layers; $nest++) {
     $tmp /= $info{'parent_time_step_ratio'}{$i};
   }
   print  "      time step :  $tmp  s\n";
-#  print  "      time step :  ",$info{'time_step'}{0}/$info{'parent_time_step_ratio'}{$nest},"  s\n";
+  if($coloropt) {print color('reset'), "\n";}
+  else{print "\n";}
 }
 print "Output time step:  $info{'history_interval'}{'0'}  minute(s)\n";
 print "\n";
@@ -171,11 +180,18 @@ print "\n";
 print "===========================Space information==========================\n";
 print "Horizontal Resolution:\n";
 for($nest=0; $nest<$nest_layers; $nest++) {
-  print "  Nest $nest:\n";
-  printf "        Grid size :  %7s m x %7s m\n",$info{'dx'}{$nest},$info{'dy'}{$nest};
-  printf "   Grid dimension :     %4s   x  %4s\n",$info{'e_we'}{$nest},$info{'e_sn'}{$nest};
+  if($coloropt) {
+    print color($colors[$nest]), "  Nest $nest:\n";
+  }
+  else {
+    print "  Nest $nest:\n";
+  }
+  printf "            Grid size :  %7s m x %7s m\n",$info{'dx'}{$nest},$info{'dy'}{$nest};
+  printf "       Grid dimension :     %4s   x  %4s\n",$info{'e_we'}{$nest},$info{'e_sn'}{$nest};
+  print "    Vertical Resolution:   $info{'e_vert'}{0} layers\n";
+  if($coloropt) {print color('reset'), "\n";}
+  else{print "\n";}
 }
-print "\nVertical Resolution:  $info{'e_vert'}{0} layers (same for all domains.)\n\n";
 
 print "=======================Parameterication Schemes=======================\n";
 foreach $var(@schemes) {
@@ -193,3 +209,22 @@ foreach $var(@schemes) {
 }
 
 print "\n";
+
+
+
+
+
+sub usage() {
+  print "  analyze_namelist.pl:  Interprate your WRF namalist.input\n";
+  print "  Ver:     1.1.0\n";
+  print "  Author:  Xiaodong Chen<xiaodc.work\@gmail.com>\n";
+  print "  Use:  analyze_namelist.pl [-h] [-i <path-to-namelist.input>] [-c]\n\n";
+
+  print "        -h     Print this help\n";
+  print "        -i     namelist.input file to be analyzed\n";
+  print "        -c     Use color output. Needs support from Term::ANSIColor module\n\n";
+  
+  print "  This version works for WRFV3.6.x. Please check with the official user guide and modify the hash within the script for other versions.\n";
+  print "  Reminder: This script works on WRFV3.6.1 namelist.input. For other versions, please double check the bash within the script before using it.\n";
+  exit;
+}
