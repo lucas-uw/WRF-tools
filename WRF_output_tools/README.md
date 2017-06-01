@@ -12,15 +12,15 @@ Most of the remapping (presumably in Climate Data Operator CDO) uses only the di
 
 Before running this script, a special WPS run (more specifically, only geogrid.exe) is required. Below shows the modifications needed, basically we use half-size grids (i.e. 15km to 7.5km) to cover the same domain (so at each direction we need to double the grid number).
 - namelist.wps for the WRF simulation:
-  e_we          = 80,
-  e_sn          = 80,
-  dx            = 15000,
-  dy            = 15000,
+  e_we          = 80,  
+  e_sn          = 80,  
+  dx            = 15000,  
+  dy            = 15000,  
 - namelist.wps for this special run:
-  e_we          = 160,
-  e_sn          = 160,
-  dx            = 7500,
-  dy            = 7500,
+  e_we          = 160,  
+  e_sn          = 160,  
+  dx            = 7500,  
+  dy            = 7500,  
 
 Then supply the generated geo_em.d01.nc to this script. All other inputs are explained when you run the script without any input argument.
 
@@ -29,25 +29,25 @@ This script provides the same function as its d01 brother. However, to accommoda
 
 - note here it has only one nested domain. For multiple domains, just focus on the nested domain level you need and its parenet level.
 - namelist.wps for the WRF simulation:
-  parent_id         = 1,1
-  parent_grid_ratio = 1,__3__
-  i_parent_start    = 1,__40__
-  j_parent_start    = 1,__35__
-  e_we              = 150,__211__
-  e_sn              = 140,__211__
-  geog_data_res     = '2m','30s'
-  dx                = 15000,
-  dy                = 15000,
+  parent_id         = 1,1  
+  parent_grid_ratio = 1,__3__  
+  i_parent_start    = 1,__40__  
+  j_parent_start    = 1,__35__  
+  e_we              = 150,__211__  
+  e_sn              = 140,__211__  
+  geog_data_res     = '2m','30s'  
+  dx                = 15000,  
+  dy                = 15000,  
 
 - namelist.wps for the special run:
-  parent_id         = 1,1
-  parent_grid_ratio = 1,__6__
-  i_parent_start    = 1,__39__
-  j_parent_start    = 1,__34__
-  e_we              = 150,__481__
-  e_sn              = 140,__481__
-  geog_data_res     = '2m', '30s'
-  dx                = 15000,
-  dy                = 15000,
+  parent_id         = 1,1  
+  parent_grid_ratio = 1,__6__  
+  i_parent_start    = 1,__39__  
+  j_parent_start    = 1,__34__  
+  e_we              = 150,__481__  
+  e_sn              = 140,__481__  
+  geog_data_res     = '2m', '30s'  
+  dx                = 15000,  
+  dy                = 15000,  
 
 The basic idea is to reduce the grid size in the desired domain (by doubleing the grid_ratio). The grid number needs to be at least doubled (so here e_we needs to be larger than 211**2=422), also it still needs to satisfy WPS requirement (i.e. 3**int+1), so here I went with 481.You can also use something like 451 here. Also reduce the i_parent and j_parent start index by 1. This has to be always 1, otherwise you need to change the parameter in the script.
