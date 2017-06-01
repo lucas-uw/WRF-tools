@@ -1,4 +1,0 @@
-README for WRF output tools:
-
-# 1. collect_wrf_rainfall.pl
-This script collects RAIN (i.e. RAINC+RAINNC) from WRF output files wrfout_d*. Currently it only handles d01 domain.
