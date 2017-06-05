@@ -50,4 +50,4 @@ This script provides the same function as its d01 brother. However, to accommoda
   dx                = 15000,  
   dy                = 15000,  
 
-The basic idea is to reduce the grid size in the desired domain (by doubleing the grid_ratio). The grid number needs to be at least doubled (so here e_we needs to be larger than 211\*2=422), also it still needs to satisfy WPS requirement (i.e. 3\*int+1), so here I went with 481.You can also use something like 451 here. Also reduce the i_parent and j_parent start index by 1. This has to be always 1, otherwise you need to change the parameter in the script.
+The basic idea is to reduce the grid size in the desired domain (by doubleing the grid_ratio). The grid number needs to be at least doubled (so here e_we needs to be larger than 211\*2=422), also it still needs to satisfy WPS requirement (i.e. 3\*int+1), so here I went with 481. You can also use something like 451 here. Also reduce the i_parent and j_parent start index by 1. This has to be always 1, otherwise you need to change the parameter in the script.
