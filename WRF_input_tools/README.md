@@ -48,7 +48,7 @@ Horizontal Resolution:
 
 Also you can find out more on its usage by running:
 ```sh
-analyze_namelist.pl
+$ analyze_namelist.pl
 ```
 Note this version currently support WRF v3.6.x. So you may want to double check the hashes in the script with WRF user guide to make sure the coding of each parameterization scheme has the same meaning, and modify them when different. I am not responsible for any mistakes from using this script to check your namelist.input.
 
