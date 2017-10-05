@@ -6,19 +6,16 @@ $wrfoutdir = shift;
 $wrfoutinterval = shift;
 $outfile = shift;
 
-#$start_time = "1970-2-16-0";
-#$end_time = "1970-2-18-0";
-
 if($start_time eq "") {
-  print "collect_wrf_rainfall.pl   Collect total precipitation from WRF output\n";
-  print "Ver:     1.0.0\n";
-  print "Author:  Xiaodong Chen<xiaodc.work\@gmail.com>\n";
-  print "Use:  collect_rainfall_adv.pl <start_time> <end_time> <wrfoutdir> <wrfoutinterval> <outfile>\n";
-  print "              <start_time>      First timestamp in wrfout. e.g.  1970-2-16-0\n";
-  print "              <end_time>        Last timestamp in wrfout. e.g.  1970-2-16-0\n";
-  print "              <wrfoutdir>       Directory containing the wrfout_d* files\n";
-  print "              <wrfoutinterval>  Time interval in WRF output. Unit is in hour\n";
-  print "              <outfile>         Output file name\n";
+  print "  collect_wrf_rainfall.pl   Collect total precipitation from WRF output\n";
+  print "  Ver:     1.0.0\n";
+  print "  Author:  Xiaodong Chen  <xiaodc.work\@gmail.com>\n";
+  print "  Use:  collect_rainfall_adv.pl <start_time> <end_time> <wrfoutdir> <wrfoutinterval> <outfile>\n";
+  print "                <start_time>      First timestamp in wrfout. e.g.  1970-2-16-0\n";
+  print "                <end_time>        Last timestamp in wrfout. e.g.  1970-2-16-0\n";
+  print "                <wrfoutdir>       Directory containing the wrfout_d* files\n";
+  print "                <wrfoutinterval>  Time interval in WRF output. Unit is in hour\n";
+  print "                <outfile>         Output file name\n";
 
   exit;
 }
