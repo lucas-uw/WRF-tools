@@ -50,11 +50,9 @@ Also you can find out more on its usage by running:
 ```sh
 $ analyze_namelist.pl
 ```
-Note this version currently support WRF v3.6.x. So you may want to double check the hashes in the script with WRF user guide to make sure the coding of each parameterization scheme has the same meaning, and modify them when different. I am not responsible for any mistakes from using this script to check your namelist.input.
+Note this version currently supports WRF v3.6.x. So you may want to double check the hashes in the script with WRF user guide to make sure the coding of each parameterization scheme has the same meaning, and modify them when different. I am not responsible for any mistakes from using this script to check your namelist.input.
 
 ## 2. Visualize\_WPS\_domain.ipynb
 This is to help visualize the WRF spatial domain from the WPS input (i.e. namelist.wps). You can find more on this script at [my blog post](https://wolfscie.wordpress.com/2017/10/05/visualizing-wrf-domain/). It contains some wheel functions that you can use for other purposes.
-
-
 
 
